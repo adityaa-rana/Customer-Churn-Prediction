@@ -13,24 +13,6 @@ While the churn prediction problem itself is quite common, my goal was to **impl
 - **High Accuracy** – achieved up to **99% accuracy** on the test set.  
 - **Deployment via FastAPI** – served the model as an API endpoint for real-world integration.
 
----
-
-## 📂 Project Structure
-customer_churn_prediction/
-│
-├── data/ # Raw and processed datasets
-├── notebooks/ # Jupyter notebooks for EDA & experimentation
-├── src/ # Source code for pipelining & model training
-│ ├── data_preprocessing.py
-│ ├── feature_engineering.py
-│ ├── model_training.py
-│ └── pipeline.py
-├── deployment/ # FastAPI app for deployment
-│ ├── main.py
-│ ├── model.pkl
-│ └── requirements.txt
-├── README.md # Project documentation
-└── requirements.txt # Python dependencies
 
 
 ---
