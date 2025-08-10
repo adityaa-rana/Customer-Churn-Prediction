@@ -55,6 +55,4 @@ While the churn prediction problem itself is quite common, my goal was to **impl
 git clone https://github.com/yourusername/customer_churn_prediction.git
 cd customer_churn_prediction
 
-Copy
-Edit
   
