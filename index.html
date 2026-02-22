@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Churn Predictor</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 40px 20px;
+    min-height: 100vh;
+    color: #e5e7eb;
+    background:
+        radial-gradient(circle at 20% 20%, #312e81 0%, transparent 40%),
+        radial-gradient(circle at 80% 0%, #7c3aed 0%, transparent 35%),
+        radial-gradient(circle at 0% 100%, #0ea5e9 0%, transparent 40%),
+        #020617;
+}
+
+/* ---------- TITLE ---------- */
+
+h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: 700;
+    font-size: 38px;
+    letter-spacing: 0.5px;
+    background: linear-gradient(90deg, #a5b4fc, #c084fc, #22d3ee);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ---------- FORM CARD ---------- */
+
+form {
+    max-width: 1150px;
+    margin: auto;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 40px;
+    border-radius: 24px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow:
+        0 30px 80px rgba(0,0,0,0.6),
+        inset 0 0 40px rgba(255,255,255,0.03);
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px 22px;
+
+    animation: floatIn 0.7s ease;
+}
+
+@keyframes floatIn {
+    from {
+        opacity: 0;
+        transform: translateY(25px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ---------- LABEL TEXT ---------- */
+
+form > * {
+    color: #e5e7eb;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* ---------- INPUTS ---------- */
+
+select,
+input[type="number"],
+input[type="range"] {
+    width: 100%;
+    padding: 12px 14px;
+    margin-top: 6px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    font-size: 14px;
+    transition: all 0.25s ease;
+}
+
+/* dropdown options readable */
+select option {
+    color: #000;
+}
+
+select:hover,
+input:hover {
+    border-color: rgba(129,140,248,0.5);
+}
+
+select:focus,
+input:focus {
+    outline: none;
+    border-color: #818cf8;
+    box-shadow: 0 0 0 3px rgba(129,140,248,0.25);
+    background: rgba(255,255,255,0.12);
+}
+
+/* ---------- SLIDER BEAUTIFICATION ---------- */
+
+input[type="range"] {
+    height: 6px;
+    padding: 0;
+    background: linear-gradient(90deg, #6366f1, #a855f7);
+    border-radius: 999px;
+    appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+    box-shadow: 0 0 12px rgba(168,85,247,0.9);
+    transition: transform 0.15s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+/* ---------- BUTTON ---------- */
+
+button {
+    grid-column: 1 / -1;
+    margin-top: 12px;
+    padding: 17px;
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.4px;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* glow sweep */
+button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.25),
+        transparent
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+button:hover::before {
+    transform: translateX(100%);
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 22px 50px rgba(99,102,241,0.55);
+}
+
+/* ---------- DIVIDER ---------- */
+
+hr {
+    margin: 60px auto;
+    max-width: 1000px;
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.25), transparent);
+}
+
+/* ---------- RESULT CARD ---------- */
+
+.result-box {
+    max-width: 900px;
+    margin: auto;
+    background: rgba(255,255,255,0.06);
+    padding: 32px 38px;
+    border-radius: 22px;
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 25px 70px rgba(0,0,0,0.55);
+    animation: floatIn 0.6s ease;
+}
+
+.probability {
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 16px;
+    color: #c7d2fe;
+}
+
+/* ---------- RISK BADGES ---------- */
+
+.risk-badge {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-weight: 600;
+    color: white;
+    margin-left: 8px;
+    font-size: 13px;
+    letter-spacing: 0.4px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+}
+
+.Low { background: linear-gradient(135deg, #22c55e, #16a34a); }
+.Medium { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.High { background: linear-gradient(135deg, #ef4444, #dc2626); }
+
+/* ---------- LIST ---------- */
+
+ul {
+    max-width: 650px;
+    margin: 18px auto 0;
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 6px;
+    color: #e5e7eb;
+}
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width: 768px) {
+    body { padding: 20px; }
+    h1 { font-size: 28px; }
+    form { padding: 26px; }
+}
+
+/* ---------- FORCE THRESHOLD SECTION TO NEW ROW ---------- */
+
+/* move the Threshold label to full width row */
+form select[name="PaymentMethod"] + br + br + * ,
+form label:contains("Threshold"),
+form > :nth-last-child(6) {
+    grid-column: 1 / -1;
+}
+
+/* specifically target the Threshold text */
+form > *:has(+ #thresholdSlider) {
+    grid-column: 1 / -1;
+    margin-top: 10px;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+/* slider full width */
+#thresholdSlider {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+}
+
+/* value below slider */
+#thresholdValue {
+    grid-column: 1 / -1;
+    display: block;
+    text-align: left;
+    margin-top: 6px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #c7d2fe;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🚀 Customer Churn Prediction</h1>
+
+<form action="/predict" method="post">
+
+    Gender:
+    <select name="gender">
+        <option>Male</option>
+        <option>Female</option>
+    </select><br><br>
+
+    Senior Citizen:
+    <select name="SeniorCitizen">
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+    </select><br><br>
+
+    Partner:
+    <select name="Partner">
+        <option>Yes</option>
+        <option>No</option>
+    </select><br><br>
+
+    Dependents:
+    <select name="Dependents">
+        <option>Yes</option>
+        <option>No</option>
+    </select><br><br>
+
+    Tenure:
+    <input type="number" name="tenure" step="any" required><br><br>
+
+    PhoneService:
+    <select name="PhoneService">
+        <option>Yes</option>
+        <option>No</option>
+    </select><br><br>
+
+    MultipleLines:
+    <select name="MultipleLines">
+        <option>Yes</option>
+        <option>No</option>
+        <option>No phone service</option>
+    </select><br><br>
+
+    InternetService:
+    <select name="InternetService">
+        <option>DSL</option>
+        <option>Fiber optic</option>
+        <option>No</option>
+    </select><br><br>
+
+    OnlineSecurity:
+    <select name="OnlineSecurity">
+        <option>Yes</option>
+        <option>No</option>
+        <option>No internet service</option>
+    </select><br><br>
+
+    OnlineBackup:
+    <select name="OnlineBackup">
+        <option>Yes</option>
+        <option>No</option>
+        <option>No internet service</option>
+    </select><br><br>
+
+    DeviceProtection:
+    <select name="DeviceProtection">
+        <option>Yes</option>
+        <option>No</option>
+        <option>No internet service</option>
+    </select><br><br>
+
+    TechSupport:
+    <select name="TechSupport">
+        <option>Yes</option>
+        <option>No</option>
+        <option>No internet service</option>
+    </select><br><br>
+
+    StreamingTV:
+    <select name="StreamingTV">
+        <option>Yes</option>
+        <option>No</option>
+        <option>No internet service</option>
+    </select><br><br>
+
+    StreamingMovies:
+    <select name="StreamingMovies">
+        <option>Yes</option>
+        <option>No</option>
+        <option>No internet service</option>
+    </select><br><br>
+
+    Contract:
+    <select name="Contract">
+        <option>Month-to-month</option>
+        <option>One year</option>
+        <option>Two year</option>
+    </select><br><br>
+
+    PaperlessBilling:
+    <select name="PaperlessBilling">
+        <option>Yes</option>
+        <option>No</option>
+    </select><br><br>
+
+    PaymentMethod:
+    <select name="PaymentMethod">
+        <option>Electronic check</option>
+        <option>Mailed check</option>
+        <option>Bank transfer (automatic)</option>
+        <option>Credit card (automatic)</option>
+    </select><br><br>
+
+    Monthly Charges:
+    <input type="number" name="MonthlyCharges" step="any" required><br><br>
+
+    Total Charges:
+    <input type="number" name="TotalCharges" step="any" required><br><br>
+
+    <div class="threshold-group">
+    <div class="threshold-label">Threshold:</div>
+
+    <input type="range" id="thresholdSlider" min="0" max="1" step="0.01" value="0.5">
+
+    <div id="thresholdValue">0.50</div>
+</div>
+
+    <button type="submit"> Predict Churn Risk</button>
+
+</form>
+
+<hr>
+
+<div class="result-box" id="resultBox" style="display:none;">
+    <h2> Prediction Result</h2>
+
+    <p class="probability">
+        Churn Probability: --
+    </p>
+
+    <p style="text-align:center;">
+        Risk Segment:
+        <span class="risk-badge">--</span>
+    </p>
+
+    <h3>Top Risk Drivers</h3>
+    <ul id="topFactorsList"></ul>
+</div>
+
+<script>
+let latestProbability = null;
+
+document.querySelector("form").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    const data = {};
+
+    formData.forEach((value, key) => {
+        data[key] = value;
+    });
+
+    data.tenure = parseFloat(data.tenure);
+    data.MonthlyCharges = parseFloat(data.MonthlyCharges);
+    data.TotalCharges = parseFloat(data.TotalCharges);
+    data.SeniorCitizen = parseInt(data.SeniorCitizen);
+
+    const response = await fetch("/predict_api", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+    updateResultUI(result);
+});
+
+function updateResultUI(result) {
+    latestProbability = result.churn_probability;
+
+    document.getElementById("resultBox").style.display = "block";
+
+    document.querySelector(".probability").innerHTML =
+        "Churn Probability: " + result.churn_probability.toFixed(3);
+
+    updateRiskFromThreshold(parseFloat(
+        document.getElementById("thresholdSlider").value
+    ));
+
+    const list = document.getElementById("topFactorsList");
+    list.innerHTML = "";
+
+    result.top_factors.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent =
+            item.feature + " : " + item.shap_value.toFixed(4);
+        list.appendChild(li);
+    });
+}
+
+const slider = document.getElementById("thresholdSlider");
+const sliderValue = document.getElementById("thresholdValue");
+
+slider.addEventListener("input", function () {
+    const threshold = parseFloat(this.value);
+    sliderValue.textContent = threshold.toFixed(2);
+
+    if (latestProbability !== null) {
+        updateRiskFromThreshold(threshold);
+    }
+});
+
+function updateRiskFromThreshold(threshold) {
+    const prob = latestProbability;
+    let risk;
+
+    if (prob < threshold * 0.6) risk = "Low Risk";
+    else if (prob < threshold) risk = "Medium Risk";
+    else risk = "High Risk";
+
+    const badge = document.querySelector(".risk-badge");
+    badge.textContent = risk;
+    badge.className = "risk-badge " + risk.split(" ")[0];
+}
+</script>
+
+</body>
+</html>
