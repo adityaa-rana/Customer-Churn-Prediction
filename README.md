@@ -1,58 +1,236 @@
-# 📊 Customer Churn Prediction – End-to-End ML Pipeline with Deployment
+# 🚀 Customer Churn Prediction System (Production-Ready)
 
-## 📌 Project Overview
-The **Customer Churn Prediction** project focuses on predicting whether a customer is likely to leave a business based on historical data.  
-While the churn prediction problem itself is quite common, my goal was to **implement an industry-ready, end-to-end ML solution** — from raw data to a fully deployable model API.
-
----
-
-## 🎯 Key Highlights
-- **Complete EDA & Feature Engineering** – handled missing values, categorical encoding, outlier detection, and scaling.  
-- **Automated ML Pipelining** – streamlined preprocessing, model training, and evaluation into a reproducible workflow.  
-- **Multiple Model Implementations** – compared Logistic Regression, Random Forest, XGBoost, and others to find the optimal model.  
-- **High Accuracy** – achieved up to **99% accuracy** on the test set.  
-- **Deployment via FastAPI** – served the model as an API endpoint for real-world integration.
-
-
+A full-stack, production-style **Customer Churn Prediction** web application built using Machine Learning and Flask.
+The system predicts churn probability, segments customers into risk tiers, and provides explainable AI insights.
 
 ---
 
-## 🛠️ Tech Stack
-- **Language:** Python  
-- **Libraries:** Pandas, NumPy, Scikit-learn, XGBoost, Matplotlib, Seaborn  
-- **Deployment:** FastAPI, Uvicorn  
-- **Other Tools:** Joblib/Pickle for model serialization
+## 🎯 Project Highlights
+
+✅ End-to-end ML pipeline
+✅ SMOTE for class imbalance
+✅ Hyperparameter tuning with GridSearchCV
+✅ Explainable AI using SHAP
+✅ Dynamic threshold slider (business control)
+✅ Real-time prediction simulator
+✅ Flask production deployment
+✅ Interactive professional UI
 
 ---
 
-## 🔍 Workflow
-1. **Data Collection & EDA**
-   - Loaded dataset
-   - Analyzed distributions, correlations, and class imbalance
-   - Visualized insights with Matplotlib & Seaborn  
+## 🧠 Problem Statement
 
-2. **Feature Engineering**
-   - Encoded categorical variables
-   - Scaled numerical features
-   - Created derived features to improve model performance  
+Customer churn is a critical business problem in subscription-based companies.
+This project predicts the probability that a customer will churn and provides actionable insights for retention teams.
 
-3. **Model Training & Evaluation**
-   - Implemented ML pipeline with preprocessing and training steps
-   - Compared multiple algorithms
-   - Selected best model based on accuracy & recall  
+---
 
-4. **Deployment**
-   - Exported final model using Joblib
-   - Created FastAPI app to serve predictions via REST API
-   - Tested endpoints locally using Postman
+## 🏗️ Project Architecture
+
+```
+ML Projects/
+│
+├── templates/
+│   └── index.html          # Frontend UI (HTML + CSS + JS)
+│
+├── utils/
+│   └── predict.py          # Prediction pipeline + SHAP explanations
+│
+├── app.py                  # Flask backend server
+├── main.py                 # (optional) local testing script
+│
+├── churn_model.pkl         # Trained ML pipeline
+├── feature_names.pkl       # Feature names after preprocessing
+├── config.json             # Threshold configuration
+│
+└── README.md               # Project documentation
+```
+
+---
+
+## ⚙️ Tech Stack
+
+**Machine Learning**
+
+* Logistic Regression
+* Random Forest
+* SMOTE (imbalanced-learn)
+* GridSearchCV
+* Scikit-learn Pipeline
+
+**Explainable AI**
+
+* SHAP (global + local explanations)
+
+**Backend**
+
+* Flask (REST API)
+
+**Frontend**
+
+* HTML5
+* CSS3 (glassmorphism UI)
+* Vanilla JavaScript
+* Fetch API (real-time inference)
+
+---
+
+## 🔄 ML Pipeline Flow
+
+```
+Raw Customer Data
+      ↓
+Preprocessing (ColumnTransformer)
+      ↓
+SMOTE (class balancing)
+      ↓
+Model Training (Logistic Regression / RF)
+      ↓
+Probability Output
+      ↓
+Dynamic Risk Segmentation
+      ↓
+SHAP Explainability
+```
+
+---
+
+## 🎚️ Dynamic Threshold System (Advanced Feature)
+
+Unlike basic churn models, this system includes a **business-controlled threshold slider**.
+
+### 🔹 What it does
+
+* Model outputs probability (fixed)
+* Business teams adjust risk sensitivity
+* No retraining required
+
+### 🔹 Why it matters
+
+In real companies:
+
+* Retention budget changes
+* Campaign capacity changes
+* Risk appetite changes
+
+This feature makes the system **production realistic**.
+
+---
+
+## 🔍 Explainable AI (SHAP)
+
+The system provides:
+
+* Global feature importance
+* Local customer-level explanations
+* Top 5 churn drivers per prediction
+
+This improves model transparency and business trust.
 
 ---
 
 ## 🚀 How to Run Locally
 
-### 1️⃣ Clone Repository
-```bash
-git clone https://github.com/yourusername/customer_churn_prediction.git
-cd customer_churn_prediction
+### 1️⃣ Clone repository
 
-  
+```bash
+git clone <your-repo-link>
+cd ML Projects
+```
+
+---
+
+### 2️⃣ Create virtual environment
+
+```bash
+python -m venv .venv
+```
+
+Activate:
+
+**Windows**
+
+```bash
+.venv\Scripts\activate
+```
+
+**Mac/Linux**
+
+```bash
+source .venv/bin/activate
+```
+
+---
+
+### 3️⃣ Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+(If requirements.txt not present)
+
+```bash
+pip install flask pandas numpy scikit-learn imbalanced-learn shap
+```
+
+---
+
+### 4️⃣ Run the Flask app
+
+```bash
+python app.py
+```
+
+Open browser:
+
+```
+http://127.0.0.1:5000
+```
+
+---
+
+## 📊 Current Features
+
+* ✅ Churn probability prediction
+* ✅ Risk segmentation (Low / Medium / High)
+* ✅ Real-time simulator
+* ✅ Threshold slider
+* ✅ SHAP top drivers
+* ✅ Professional UI
+
+---
+
+## 🚀 Upcoming Enhancements
+
+* 📈 Churn probability distribution dashboard
+* 🧾 Top risk customers table
+* 🌍 Global feature importance chart
+* 📉 Model performance dashboard
+* ☁️ Cloud deployment (Render/AWS)
+
+---
+
+## 👨‍💻 Author
+
+**Aditya Rana**
+
+If you found this project helpful, feel free to ⭐ the repo.
+
+---
+
+## 🧠 Interview Talking Points
+
+This project demonstrates:
+
+* End-to-end ML deployment
+* Handling class imbalance
+* Production ML pipeline design
+* Explainable AI integration
+* Business-aware threshold tuning
+* Full-stack ML system building
+
+---
+
+⭐ **This is not just a model — it's a production-style ML system.**
+<img width="379" height="416" alt="image" src="https://github.com/user-attachments/assets/54be4f2b-fbcf-4872-81f6-e15b14b8c31b" />
