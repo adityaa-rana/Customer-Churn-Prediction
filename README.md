@@ -224,7 +224,8 @@ This project demonstrates:
 * Business-aware threshold tuning
 * Full-stack ML system building
 
----
+<img width="1077" height="987" alt="image" src="https://github.com/user-attachments/assets/0ae5862b-b560-44d5-84da-1eaa1553affa" />
 
-⭐ **This is not just a model — it's a production-style ML system.**
-<img width="379" height="416" alt="image" src="https://github.com/user-attachments/assets/54be4f2b-fbcf-4872-81f6-e15b14b8c31b" />
+<img width="1181" height="881" alt="image" src="https://github.com/user-attachments/assets/b42f92f1-e320-47e1-90ff-f71ca0a5e369" />
+
+
