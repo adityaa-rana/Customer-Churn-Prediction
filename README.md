@@ -211,18 +211,6 @@ http://127.0.0.1:5000
 
 If you found this project helpful, feel free to ⭐ the repo.
 
----
-
-## 🧠 Interview Talking Points
-
-This project demonstrates:
-
-* End-to-end ML deployment
-* Handling class imbalance
-* Production ML pipeline design
-* Explainable AI integration
-* Business-aware threshold tuning
-* Full-stack ML system building
 
 <img width="1077" height="987" alt="image" src="https://github.com/user-attachments/assets/0ae5862b-b560-44d5-84da-1eaa1553affa" />
 
