@@ -165,12 +165,6 @@ source .venv/bin/activate
 ### 3️⃣ Install dependencies
 
 ```bash
-pip install -r requirements.txt
-```
-
-(If requirements.txt not present)
-
-```bash
 pip install flask pandas numpy scikit-learn imbalanced-learn shap
 ```
 
